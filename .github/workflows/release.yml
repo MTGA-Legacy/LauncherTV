@@ -83,7 +83,7 @@ jobs:
           grep -F 'Verified using v1 scheme (JAR signing): true' "$RUNNER_TEMP/apk-signature.txt"
           "$tools/aapt" dump badging "$apk" > "$RUNNER_TEMP/apk-info.txt"
           grep -F "package: name='com.gathin.tvhome' versionCode='$VERSION_CODE' versionName='$VERSION'" "$RUNNER_TEMP/apk-info.txt"
-          grep -Fx "sdkVersion:'26'" "$RUNNER_TEMP/apk-info.txt"
+          grep -Fx "sdkVersion:'19'" "$RUNNER_TEMP/apk-info.txt"
           grep -Fx "targetSdkVersion:'37'" "$RUNNER_TEMP/apk-info.txt"
           if grep -q 'application-debuggable' "$RUNNER_TEMP/apk-info.txt"; then exit 1; fi
           cd "$dist"

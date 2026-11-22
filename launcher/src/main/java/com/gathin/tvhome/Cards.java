@@ -9,7 +9,6 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.content.pm.Signature;
-import android.content.pm.SigningInfo;
 import android.content.res.Resources;
 import android.content.res.XmlResourceParser;
 import android.os.Build;
@@ -643,16 +642,10 @@ final class Cards {
     @SuppressWarnings("deprecation")
     static String digest(PackageManager pm, String pkg) throws Exception {
         Signature[] sigs;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-            PackageInfo pi = pm.getPackageInfo(pkg, PackageManager.GET_SIGNING_CERTIFICATES);
-            SigningInfo info = pi.signingInfo;
-            if (info == null) throw new CardException("package has no signing certificate");
-            if (info.hasMultipleSigners()) throw new CardException("package has more than one signer");
-            sigs = info.getApkContentsSigners();
-        } else {
-            PackageInfo pi = pm.getPackageInfo(pkg, PackageManager.GET_SIGNATURES);
-            sigs = pi.signatures;
-        }
+        // GET_SIGNATURES exists on API 19 and still returns the package signer for the single-signer
+        // add-ons this launcher accepts. Avoid linking SigningInfo, which was added in API 28.
+        PackageInfo pi = pm.getPackageInfo(pkg, PackageManager.GET_SIGNATURES);
+        sigs = pi.signatures;
         if (sigs == null || sigs.length != 1) {
             throw new CardException("package has " + (sigs == null ? 0 : sigs.length) + " signing certificates, expected one");
         }

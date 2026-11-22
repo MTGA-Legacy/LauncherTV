@@ -1,6 +1,5 @@
 package com.gathin.tvhome;
 
-import android.media.tv.TvInputManager;
 
 /** Which Inputs menu rows inputs_connected_only folds behind "More inputs". */
 final class InputFold {
@@ -14,6 +13,6 @@ final class InputFold {
      */
     static boolean folds(boolean hdmi, int state) {
         if (!hdmi) return true;
-        return state != -1 && state != TvInputManager.INPUT_STATE_CONNECTED;
+        return state != -1 && state != TvInputCompat.INPUT_STATE_CONNECTED;
     }
 }

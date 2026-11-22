@@ -6,7 +6,7 @@ Apple TV 风格的 Android TV 桌面，当前实现提取自 [CleanYourTV](https
 
 - 仅替换桌面实现和对应资源。
 - 默认包名：`com.gathin.tvhome`。
-- 当前上游桌面 `minSdk` 为 26（Android 8.0），本次没有做 Android 4.4/API 19 适配。
+- 当前桌面支持 Android 4.4/API 19 及以上；API 19 使用兼容层，较新的 Android TV 输入框架和 DreamService 会按平台能力启用。
 
 ## 构建
 

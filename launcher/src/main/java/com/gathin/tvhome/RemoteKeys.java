@@ -7,7 +7,6 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
-import android.media.tv.TvContract;
 import android.os.Build;
 import android.provider.Settings;
 import android.os.Handler;
@@ -379,7 +378,7 @@ final class RemoteKeys {
         switch (target) {
             case "mute":
                 // The media stream a TV plays everything on, with its own volume bar, as a remote's mute button would.
-                AudioManager audio = ctx.getSystemService(AudioManager.class);
+                AudioManager audio = (AudioManager) ApiCompat.service(ctx, Context.AUDIO_SERVICE);
                 if (audio != null) audio.adjustStreamVolume(AudioManager.STREAM_MUSIC,
                         AudioManager.ADJUST_TOGGLE_MUTE, AudioManager.FLAG_SHOW_UI);
                 break;
@@ -441,7 +440,7 @@ final class RemoteKeys {
         if (guide != null) {
             // The program guide, asked for the way Android TV's Live TV apps take it: the programs directory.
             start(ctx, new Intent(Intent.ACTION_VIEW)
-                    .setDataAndType(TvContract.Programs.CONTENT_URI, "vnd.android.cursor.dir/program")
+                    .setDataAndType(TvInputCompat.programsUri(), "vnd.android.cursor.dir/program")
                     .setPackage(guide));
             return;
         }
@@ -449,7 +448,7 @@ final class RemoteKeys {
         if (inputId != null) {
             // The same passthrough URI the Inputs menu opens, which the Live TV app handles.
             Intent view = new Intent(Intent.ACTION_VIEW)
-                    .setDataAndType(TvContract.buildChannelUriForPassthroughInput(inputId),
+                    .setDataAndType(TvInputCompat.passthroughUri(inputId),
                             "vnd.android.cursor.item/channel")
                     .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             // Aimed at the Live TV app first, as the Inputs menu does: an app that also claims the channel URI
@@ -476,8 +475,7 @@ final class RemoteKeys {
             }
             return;
         }
-        Intent open = ctx.getPackageManager().getLeanbackLaunchIntentForPackage(pkg);
-        if (open == null) open = ctx.getPackageManager().getLaunchIntentForPackage(pkg);
+        Intent open = ApiCompat.launchIntent(ctx.getPackageManager(), pkg);
         if (open == null) return;
         try {
             ctx.startActivity(open.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));

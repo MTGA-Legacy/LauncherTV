@@ -15,8 +15,9 @@ APKs are written under `launcher/build/outputs/apk/`. Release APKs are unsigned
 unless private signing properties are configured. Preserve the original signing
 key when distributing updates.
 
-The project compiles and targets API 37, with minimum API 14 and Java 8 bytecode.
-Keep dependencies and newer API calls compatible with older devices.
+The project compiles and targets API 37, with minimum API 19. Java 17 source is
+desugared for the API 19 runtime; keep framework calls behind the compatibility
+helpers in `launcher/src/main/java/com/gathin/tvhome`.
 
 ## Default tiles for custom ROMs
 

@@ -4,8 +4,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.os.UserManager;
 import android.service.notification.NotificationListenerService;
+import android.service.notification.StatusBarNotification;
 
 /**
  * Starts this launcher's process after the firmware has killed it.
@@ -17,10 +17,18 @@ import android.service.notification.NotificationListenerService;
 public class GuardRevival extends NotificationListenerService {
     private BroadcastReceiver unlocked;
 
+    // These callbacks were abstract on the API 19 notification listener contract.
+    @Override
+    public void onNotificationPosted(StatusBarNotification notification) {
+    }
+
+    @Override
+    public void onNotificationRemoved(StatusBarNotification notification) {
+    }
+
     @Override
     public void onListenerConnected() {
-        UserManager users = getSystemService(UserManager.class);
-        if (users != null && !users.isUserUnlocked()) {
+        if (!ApiCompat.userUnlocked(this)) {
             if (unlocked != null) return;
             unlocked = new BroadcastReceiver() {
                 @Override
@@ -30,7 +38,7 @@ public class GuardRevival extends NotificationListenerService {
                 }
             };
             registerReceiver(unlocked, new IntentFilter(Intent.ACTION_USER_UNLOCKED));
-            if (users.isUserUnlocked()) {
+            if (ApiCompat.userUnlocked(this)) {
                 stopWaiting();
                 GuardKeep.ensureHomeKey(this);
             }

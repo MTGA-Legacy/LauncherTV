@@ -2,7 +2,6 @@ package com.gathin.tvhome;
 
 import android.content.Context;
 import android.hardware.display.DisplayManager;
-import android.os.Build;
 import android.view.Display;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,7 +36,7 @@ final class ClockRefresh implements Runnable, DisplayManager.DisplayListener {
      * re-aligns after the wall clock was set (registering the same listener twice is a no-op).
      */
     void start() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) return;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) return;
         displays.registerDisplayListener(this, null);
         schedule();
     }
@@ -59,7 +58,7 @@ final class ClockRefresh implements Runnable, DisplayManager.DisplayListener {
     public void onDisplayChanged(int displayId) {
         Display d = root.getDisplay();
         if (d == null || d.getDisplayId() != displayId) return;
-        boolean nowOn = d.getState() == Display.STATE_ON;
+        boolean nowOn = ApiCompat.displayOn(root.getContext(), d);
         if (nowOn && !on) run();
         on = nowOn;
     }

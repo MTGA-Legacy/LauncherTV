@@ -17,7 +17,9 @@ final class UiFont {
         TypedValue value = new TypedValue();
         res.getValue(fontString, value, true);
         String name = String.valueOf(value.string);
-        if (name.startsWith("res/")) return res.getFont(value.resourceId);
+        if (name.startsWith("res/") && android.os.Build.VERSION.SDK_INT >= 26) {
+            return res.getFont(value.resourceId);
+        }
         return Typeface.create(name, Typeface.NORMAL);
     }
 }

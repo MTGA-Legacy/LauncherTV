@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.os.PowerManager;
-import android.os.UserManager;
 import android.provider.Settings;
 
 import java.util.ArrayList;
@@ -35,8 +34,7 @@ final class GuardKeep {
     }
 
     static boolean offInStandby(Context context) {
-        UserManager users = context.getSystemService(UserManager.class);
-        if (users != null && !users.isUserUnlocked()) return false;
+        if (!ApiCompat.userUnlocked(context)) return false;
         return context.getSharedPreferences(PREFS, Context.MODE_PRIVATE).getBoolean(KEY_OFF, false);
     }
 
@@ -50,11 +48,11 @@ final class GuardKeep {
         // that arrives after that, so the first screen-off does nothing (Philips 65PUS8102).
         HomeKeyService.applyStandbyOptIn();
         if (!offInStandby(context)) return;
-        if (context.checkSelfPermission(Manifest.permission.WRITE_SECURE_SETTINGS)
+        if (context.checkCallingOrSelfPermission(Manifest.permission.WRITE_SECURE_SETTINGS)
                 != PackageManager.PERMISSION_GRANTED) return;
-        PowerManager power = context.getSystemService(PowerManager.class);
+        PowerManager power = (PowerManager) ApiCompat.service(context, Context.POWER_SERVICE);
         // Still off: binding the helper again would sit on the power key. Wait for the screen.
-        if (power != null && !power.isInteractive()) {
+        if (power != null && !ApiCompat.interactive(context)) {
             watchScreenOn(context.getApplicationContext());
             return;
         }
@@ -86,7 +84,7 @@ final class GuardKeep {
     /** Drops the service from the list and puts it back on the next SCREEN_ON. The process has to stay up. */
     static void stepOut(AccessibilityService service) {
         watchScreenOn(service.getApplicationContext());
-        service.disableSelf();
+        ApiCompat.disableAccessibilityService(service);
     }
 
     private static void watchScreenOn(Context app) {

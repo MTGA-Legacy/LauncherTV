@@ -20,7 +20,13 @@ final class LauncherLocale {
     /** The Locale for a config tag such as "vi", "pt-BR" or "ar-EG-u-nu-latn", or null for "" or anything that is not a plain tag. */
     static Locale parse(String tag) {
         if (tag == null || !TAG.matcher(tag.trim()).matches()) return null;
-        return Locale.forLanguageTag(tag.trim());
+        String[] parts = tag.trim().split("-");
+        String language = parts[0].toLowerCase(Locale.US);
+        String country = "";
+        String variant = "";
+        if (parts.length > 1 && parts[1].length() == 2) country = parts[1].toUpperCase(Locale.US);
+        if (parts.length > 2) variant = parts[2];
+        return new Locale(language, country, variant);
     }
 
     /** base with the configured language, or base itself when locale is off. */
