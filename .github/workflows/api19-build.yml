@@ -48,11 +48,27 @@ jobs:
           grep -Fx "targetSdkVersion:'37'" "$RUNNER_TEMP/apk-info.txt"
           grep -F "package: name='com.gathin.tvhome'" "$RUNNER_TEMP/apk-info.txt"
 
+      - name: Sign installable API 19 release APK
+        run: |
+          set -euo pipefail
+          key="$RUNNER_TEMP/api19-test.jks"
+          keytool -genkeypair -v -keystore "$key" -storepass android -keypass android \
+            -alias androiddebugkey -keyalg RSA -keysize 2048 -validity 10000 \
+            -dname "CN=Android Debug,O=Android,C=US"
+          tools="$ANDROID_HOME/build-tools/36.0.0"
+          signed=launcher/build/outputs/apk/release/LauncherTV-api19.apk
+          "$tools/apksigner" sign --ks "$key" --ks-pass pass:android --key-pass pass:android \
+            --v1-signing-enabled true --v2-signing-enabled true \
+            --out "$signed" launcher/build/outputs/apk/release/launcher-release-unsigned.apk
+          "$tools/apksigner" verify --verbose "$signed" | tee "$RUNNER_TEMP/api19-signature.txt"
+          grep -F 'Verified using v1 scheme (JAR signing): true' "$RUNNER_TEMP/api19-signature.txt"
+          "$tools/aapt" dump badging "$signed" | grep -Fx "sdkVersion:'19'"
+
       - name: Save APK artifacts
         uses: actions/upload-artifact@v7.0.2
         with:
           name: LauncherTV-api19-${{ github.run_number }}
           path: |
             launcher/build/outputs/apk/debug/launcher-debug.apk
-            launcher/build/outputs/apk/release/launcher-release-unsigned.apk
+            launcher/build/outputs/apk/release/LauncherTV-api19.apk
           if-no-files-found: error
