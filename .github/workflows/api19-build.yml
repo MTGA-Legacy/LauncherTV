@@ -33,6 +33,12 @@ jobs:
       - name: Build and lint
         run: ./gradlew --no-daemon assembleDebug assembleRelease lintDebug
 
+      - name: Print lint report on failure
+        if: ${{ failure() }}
+        run: |
+          report="$(find launcher/build/intermediates -name lint-results-debug.txt -print -quit)"
+          if [ -n "$report" ]; then cat "$report"; fi
+
       - name: Check API 19 package metadata
         run: |
           set -euo pipefail

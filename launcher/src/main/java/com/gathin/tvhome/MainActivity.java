@@ -1,5 +1,6 @@
 package com.gathin.tvhome;
 
+import android.annotation.SuppressLint;
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
 import android.app.Activity;
@@ -1694,6 +1695,7 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
 
     @Override
     @SuppressWarnings("deprecation")
+    @SuppressLint("GestureBackNavigation")
     public void onBackPressed() {
         // Home screen: Back goes nowhere, unless back_opens_clock is on.
         if (backOpensClock) startActivity(new Intent(this, ClockActivity.class));
