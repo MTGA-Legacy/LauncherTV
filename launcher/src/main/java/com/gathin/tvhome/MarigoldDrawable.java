@@ -201,7 +201,8 @@ public final class MarigoldDrawable extends Drawable {
         Rect b = getBounds();
         if (b.isEmpty()) return;
         float s = Math.min(b.width(), b.height()) / BOX;
-        int save = alpha < 255 ? c.saveLayerAlpha(new RectF(b.left, b.top, b.right, b.bottom), alpha) : c.save();
+        int save = alpha < 255 ? c.saveLayerAlpha(new RectF(b.left, b.top, b.right, b.bottom), alpha,
+                Canvas.HAS_ALPHA_LAYER_SAVE_FLAG) : c.save();
         c.clipRect(b);
         c.translate(b.exactCenterX() - C * s, b.exactCenterY() - C * s);
         c.scale(s, s);
