@@ -1,0 +1,52 @@
+name: API 19 compatibility build
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Check out sources
+        uses: actions/checkout@v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Set up Java
+        uses: actions/setup-java@v6.1.0
+        with:
+          distribution: temurin
+          java-version: '25'
+          cache: gradle
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v4.0.4
+        with:
+          cmdline-tools-version: '16111833'
+          log-accepted-android-sdk-licenses: false
+          packages: 'platform-tools platforms;android-37 build-tools;36.0.0'
+
+      - name: Build and lint
+        run: ./gradlew --no-daemon assembleDebug assembleRelease lintDebug
+
+      - name: Check API 19 package metadata
+        run: |
+          set -euo pipefail
+          apk=launcher/build/outputs/apk/release/launcher-release-unsigned.apk
+          "$ANDROID_HOME/build-tools/36.0.0/aapt" dump badging "$apk" | tee "$RUNNER_TEMP/apk-info.txt"
+          grep -Fx "sdkVersion:'19'" "$RUNNER_TEMP/apk-info.txt"
+          grep -Fx "targetSdkVersion:'37'" "$RUNNER_TEMP/apk-info.txt"
+          grep -F "package: name='com.gathin.tvhome'" "$RUNNER_TEMP/apk-info.txt"
+
+      - name: Save APK artifacts
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: LauncherTV-api19-${{ github.run_number }}
+          path: |
+            launcher/build/outputs/apk/debug/launcher-debug.apk
+            launcher/build/outputs/apk/release/launcher-release-unsigned.apk
+          if-no-files-found: error
