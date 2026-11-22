@@ -1,6 +1,11 @@
-Apache Simple TV Launcher
-Copyright 2015-2017 The Apache Software Foundation
+LauncherTV currently contains the launcher implementation extracted from CleanYourTV.
 
-This product includes software developed at
-The Apache Software Foundation (http://www.apache.org/).
+CleanYourTV launcher code
+Copyright (c) 2026 Gathin
+Licensed under the MIT License; see launcher/LICENSE-MIT.
 
+The Outfit typeface is licensed under the SIL Open Font License 1.1;
+see launcher/FONT-LICENSE-OFL.txt.
+
+The Halloween artwork is derived from Microsoft's Fluent Emoji and is licensed
+under the MIT License; see launcher/ICONS-LICENSE-FLUENT-EMOJI.txt.

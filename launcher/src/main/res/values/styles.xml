@@ -1,51 +1,56 @@
-<!--
-  ~ Simple TV Launcher
-  ~ Copyright 2017 Alexandre Del Bigio
-  ~
-  ~ Licensed under the Apache License, Version 2.0 (the "License");
-  ~ you may not use this file except in compliance with the License.
-  ~ You may obtain a copy of the License at
-  ~
-  ~     http://www.apache.org/licenses/LICENSE-2.0
-  ~
-  ~ Unless required by applicable law or agreed to in writing, software
-  ~ distributed under the License is distributed on an "AS IS" BASIS,
-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  ~ See the License for the specific language governing permissions and
-  ~ limitations under the License.
-  -->
-
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <style name="Theme.TvHome" parent="android:Theme.Material.NoActionBar.Fullscreen">
+        <item name="android:windowBackground">@android:color/black</item>
+        <item name="android:colorBackground">@android:color/black</item>
+        <item name="android:windowAnimationStyle">@null</item>
+    </style>
 
-	<style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
-		<item name="android:windowAnimationStyle">@android:style/Animation</item>
-		<item name="android:background">@android:color/transparent</item>
-		<item name="background">@android:color/transparent</item>
+    <!-- Frosted pill, tvOS style. -->
+    <style name="TopButtonBase">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">42dp</item>
+        <item name="android:layout_marginStart">10dp</item>
+        <item name="android:paddingStart">16dp</item>
+        <item name="android:paddingEnd">20dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/pill_bg</item>
+        <item name="android:textColor">@drawable/pill_text</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:fontFamily">@string/font_medium</item>
+        <item name="android:letterSpacing">0.01</item>
+        <item name="android:drawablePadding">9dp</item>
+        <item name="android:drawableTint">@drawable/pill_text</item>
+        <item name="android:focusable">true</item>
+        <item name="android:clickable">true</item>
+    </style>
+    <style name="TopButton" parent="TopButtonBase" />
 
-		<item name="android:windowBackground">@android:color/transparent</item>
-		<item name="android:colorBackgroundCacheHint">@null</item>
-		<item name="android:windowShowWallpaper">true</item>
+    <!-- Icon-only pill: a 42dp circle (pill_bg's 21dp corners) with the 22dp icon centred by even padding. Give it a
+         contentDescription, since there is no text. -->
+    <style name="TopButtonIcon" parent="TopButtonBase">
+        <item name="android:layout_width">42dp</item>
+        <item name="android:paddingStart">10dp</item>
+        <item name="android:paddingEnd">10dp</item>
+        <item name="android:drawablePadding">0dp</item>
+    </style>
 
-		<!--
-		<item name="android:windowTranslucentNavigation">true</item>
-		<item name="android:windowTranslucentStatus">true</item>
-		-->
-	</style>
-
-	<style name="Theme.AppCompat.Light.NoActionBar.FullScreen" parent="@style/AppTheme">
-		<item name="windowNoTitle">true</item>
-		<item name="windowActionBar">false</item>
-		<item name="android:windowFullscreen">true</item>
-		<item name="android:windowContentOverlay">@null</item>
-
-		<item name="android:background">@android:color/transparent</item>
-		<item name="background">@android:color/transparent</item>
-	</style>
-
-	<style name="ApplicationButton" parent="Theme.AppCompat.Light.NoActionBar.FullScreen">
-		<item name="android:layout_width">0dp</item>
-		<item name="android:layout_height">wrap_content</item>
-		<item name="android:layout_weight">1</item>
-		<item name="android:layout_margin">10dp</item>
-	</style>
+    <style name="SettingsRow">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">52dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingStart">18dp</item>
+        <item name="android:paddingEnd">18dp</item>
+        <item name="android:background">@drawable/settings_choice_bg</item>
+        <item name="android:textColor">#FFFFFFFF</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:focusable">true</item>
+        <item name="android:clickable">true</item>
+    </style>
+    <style name="SettingsColumnChoice" parent="SettingsRow">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_marginEnd">10dp</item>
+        <item name="android:gravity">center</item>
+    </style>
 </resources>

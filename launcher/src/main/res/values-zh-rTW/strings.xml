@@ -1,126 +1,100 @@
-<?xml version="1.0" encoding="utf-8"?><!--
-  ~ Simple TV Launcher
-  ~ Copyright 2017 Alexandre Del Bigio
-  ~
-  ~ Licensed under the Apache License, Version 2.0 (the "License");
-  ~ you may not use this file except in compliance with the License.
-  ~ You may obtain a copy of the License at
-  ~
-  ~     http://www.apache.org/licenses/LICENSE-2.0
-  ~
-  ~ Unless required by applicable law or agreed to in writing, software
-  ~ distributed under the License is distributed on an "AS IS" BASIS,
-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  ~ See the License for the specific language governing permissions and
-  ~ limitations under the License.
-  -->
-
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string name="applications">應用程式</string>
-	<string name="preferences">偏好設定</string>
-	<string name="title_screen_always_on">螢幕保持開啟</string>
-	<string name="summary_screen_always_on">防止螢幕自動關閉</string>
-	<string name="app_grid">格線大小</string>
-	<string name="title_grid_x">欄數</string>
-	<string name="summary_grid_x">欄數：%s</string>
-	<string name="title_grid_y">列數</string>
-	<string name="summary_grid_y">列數：%s</string>
-	<string name="system">系統</string>
-	<string name="title_background">背景</string>
-	<string name="summary_background">設定背景圖片</string>
-	<string name="title_system">系統設定</string>
-	<string name="title_screensaver">螢幕保護程式</string>
-	<string name="summary_screensaver">開啟螢幕保護程式設定</string>
-	<string name="screensaver_unavailable">此裝置無法開啟螢幕保護程式設定</string>
-	<string name="settings_unavailable">此裝置無法開啟系統設定</string>
-	<string name="add_shortcut">新增捷徑</string>
-	<string name="confirm_shortcut">要將 %1$s 新增至第一個空白方格嗎？</string>
-	<string name="shortcut_unavailable">無法新增或開啟此捷徑</string>
-	<string name="no_empty_tile">沒有空白方格。請先移除圖示或增加格線大小。</string>
-	<string name="summary_system">開啟系統設定</string>
-	<string name="summary_show_date">在時間下方顯示日期</string>
-	<string name="summary_show_battery_information">在主畫面顯示電池電量及狀態</string>
-	<string name="title_show_date">顯示日期</string>
-	<string name="title_show_battery_information">顯示電池資訊</string>
-	<string name="summary_show_name">在主畫面顯示應用程式名稱</string>
-	<string name="title_show_name">顯示名稱</string>
-	<string name="title_margin_x">圖示水平間距</string>
-	<string name="title_margin_y">圖示垂直間距</string>
-	<string name="summary_margin_x">圖示之間的水平間距：%s dp</string>
-	<string name="summary_margin_y">圖示之間的垂直間距：%s dp</string>
-	<string name="title_transparency">背景透明度</string>
-	<string name="title_default_transparency">預設透明度</string>
-	<string name="summary_default_transparency">使用原有的方格透明度</string>
-	<string name="about">關於</string>
-	<string name="error_opening_link">錯誤（%1$s）：%2$s</string>
-	<string name="home_locked">圖示已在設定中鎖定</string>
-	<string name="application_unavailable">無法使用：%1$s</string>
-	<string name="summary_locked">防止變更圖示及格線</string>
-	<string name="title_locked">鎖定圖示</string>
-	<string name="new_folder">新增資料夾…</string>
-	<string name="folder_name">資料夾名稱</string>
-	<string name="folder_add">新增</string>
-	<string name="folder_rename">重新命名</string>
-	<string name="folder_delete">刪除資料夾</string>
-	<string name="folder_delete_confirm">要刪除此資料夾及其主畫面方格嗎？這不會解除安裝應用程式。</string>
-	<string name="folder_empty">此資料夾是空的。</string>
-	<string name="folder_hint">長按項目即可將其移出此資料夾。</string>
-	<string name="folder_remove">要將 %1$s 移出此資料夾嗎？</string>
-	<string name="folder_error">無法讀取此資料夾。</string>
-	<string name="protection">PIN 碼與隱藏應用程式</string>
-	<string name="protection_summary">保護偏好設定、應用程式及資料夾。</string>
-	<string name="pin">PIN 碼</string>
-	<string name="unlock">輸入 PIN 碼</string>
-	<string name="pin_enable">設定 PIN 碼</string>
-	<string name="pin_change">變更 PIN 碼</string>
-	<string name="pin_confirm">確認 PIN 碼</string>
-	<string name="pin_format">請輸入 4 至 8 位數字。</string>
-	<string name="pin_mismatch">兩次輸入的 PIN 碼不相符。</string>
-	<string name="pin_invalid">PIN 碼不正確。</string>
-	<string name="pin_retry">嘗試次數過多。請等候 30 秒。</string>
-	<string name="pin_summary">設定 PIN 碼以保護偏好設定及捷徑建立功能。</string>
-	<string name="hidden_apps">隱藏應用程式</string>
-	<string name="hidden_summary">在主畫面及清單中隱藏應用程式及其捷徑，並保留原有的方格配置。</string>
-	<string name="locked_apps">受保護的應用程式及資料夾</string>
-	<string name="locked_summary">開啟所選項目前必須輸入 PIN 碼。</string>
-	<string name="protection_disable">停用保護</string>
-	<string name="protection_disable_summary">重新顯示隱藏的應用程式，並停止要求 PIN 碼。保留選取項目以供日後使用。</string>
-	<string name="protection_limits">僅保護此啟動器</string>
-	<string name="protection_recovery">此功能不會鎖定 Android 或其他啟動器。若忘記 PIN 碼，必須在 Android 設定中清除此啟動器的資料，這也會重設主畫面配置。</string>
-	<string name="protection_error">無法儲存保護設定。</string>
-	<string name="protection_category">安全性</string>
-	<string name="title_show_wallpaper">在主畫面顯示桌布</string>
-	<string name="summary_show_wallpaper">關閉後主畫面背景將變為黑色，不會變更 Android 桌布。</string>
-	<string name="reset_wallpaper">還原預設桌布</string>
-	<string name="summary_reset_wallpaper">還原所有啟動器共用的 Android 主畫面桌布。</string>
-	<string name="confirm_reset_wallpaper">要還原預設 Android 主畫面桌布嗎？這會變更所有啟動器的桌布。</string>
-	<string name="resetting_wallpaper">正在還原桌布…</string>
-	<string name="wallpaper_restored">已還原預設桌布。</string>
-	<string name="wallpaper_error">無法在此裝置上還原桌布。</string>
-	<string name="wallpaper_unavailable">此裝置無法開啟桌布選擇功能。</string>
-	<string name="title_show_ip">顯示 IP 位址</string>
-	<string name="summary_show_ip">依網路介面顯示本機位址。選取位址區域可查看詳細資訊。</string>
-	<string name="ip_addresses">IP 位址</string>
-	<string name="network_disconnected">未連線至網路</string>
-	<string name="ip_unavailable">沒有可用的 IP 位址</string>
-	<string name="network_unavailable">無法取得網路資訊</string>
-	<string name="choose_home_image">選擇主畫面圖片</string>
-	<string name="summary_choose_home_image">選擇僅供 LauncherTV 使用的圖片（最大 32 MB），並啟用主畫面圖片。</string>
-	<string name="use_home_image">使用主畫面圖片</string>
-	<string name="summary_home_image">停用後會重新顯示 Android 桌布。Android 桌布不會變更。</string>
-	<string name="image_scale">主畫面圖片縮放方式</string>
-	<string name="image_fit">完整圖片（必要時加上黑邊）</string>
-	<string name="image_crop">填滿螢幕（必要時裁切邊緣）</string>
-	<string name="image_imported">已儲存主畫面圖片</string>
-	<string name="image_error">無法儲存此圖片。請選擇有效且不超過 32 MB 的圖片。</string>
-	<string name="image_picker_unavailable">沒有可用的圖片選擇工具</string>
-	<string name="title_show_network">顯示網路圖示</string>
-	<string name="summary_show_network">在時鐘旁顯示連線類型，不會檢查網際網路存取狀態。</string>
-	<string name="network_wifi">已連線至 Wi-Fi</string>
-	<string name="network_ethernet">已連線至乙太網路</string>
-	<string name="network_other">已連線至其他網路</string>
-	<string name="title_home">預設主畫面應用程式</string>
-	<string name="summary_home">在 Android 設定中將 LauncherTV 設為預設主畫面。</string>
-	<string name="home_settings_unavailable">無法選擇主畫面，已開啟 Android 設定。</string>
-	<string name="title_privacy">隱私權政策</string>
+    <string name="app_name">主畫面</string>
+    <string name="inputs">輸入來源</string>
+    <string name="wifi">Wi-Fi</string>
+    <string name="settings">設定</string>
+    <string name="choose_input">輸入來源</string>
+    <string name="connected">已連線</string>
+    <string name="standby">待機</string>
+    <string name="not_connected">未連接裝置</string>
+    <string name="live_tv">電視直播</string>
+    <string name="no_inputs">找不到輸入來源</string>
+    <string name="more_inputs">更多輸入來源</string>
+    <string name="good_morning">早安</string>
+    <string name="good_afternoon">午安</string>
+    <string name="good_evening">晚安</string>
+    <string name="good_night">夜深了</string>
+    <string name="ethernet">有線網路</string>
+    <string name="offline">未連上網路</string>
+    <string name="not_available">這台電視不支援此功能</string>
+    <string name="cant_open">無法開啟 %1$s</string>
+    <string name="date_format">M月d日 EEEE</string>
+    <string name="stats_cpu">CPU %1$d%%</string>
+    <string name="stats_memory">記憶體 %1$d / %2$d MB</string>
+    <string name="stats_storage">儲存空間剩餘 %1$s</string>
+    <string name="dream_name">時鐘</string>
+    <string name="vpn">VPN</string>
+    <string name="vpn_off">VPN 未開啟</string>
+    <string name="home_settings">選擇預設主畫面</string>
+    <string name="home_settings_help">選擇原本的主畫面即可停止使用 CleanYourTV 當主畫面，要切回來時選 CleanYourTV。原本的桌面必須仍是啟用狀態，如果被安裝腳本停用了，請先用還原腳本啟用；電視也必須有系統的主畫面選擇頁。</string>
+    <string name="launcher_settings">桌面設定</string>
+    <string name="native_settings">原生設定</string>
+    <string name="columns_label">每列 app 數量</string>
+    <string name="dock_opacity_label">Dock 列不透明度</string>
+    <string name="animations_state">動畫效果：%1$s</string>
+    <string name="advanced_effects">進階效果</string>
+    <string name="advanced_effects_state">進階效果：%1$s</string>
+    <string name="open_on_start_label">開機時開啟</string>
+    <string name="open_on_start_state">開機時開啟：%1$s</string>
+    <string name="advanced_effects_warning">加上圖塊浮起、圖示放大與背景顏色漸變。可能會多用一些記憶體，實際差異視電視而定。</string>
+    <string name="follow_theme">跟隨主題（重設電視上的選擇）</string>
+    <string name="follow_theme_hint">改用目前主題或內建的版面與動畫設定。推送或重設主題時，也會清除你在電視上做的這些選擇。</string>
+    <string name="tv_settings">電視系統設定</string>
+    <string name="on">開</string>
+    <string name="off">關</string>
+    <string name="enable">啟用</string>
+    <string name="input_key_service_description">按下遙控器的輸入鍵時開啟輸入來源選單。</string>
+    <string name="home_key_name">主畫面鍵</string>
+    <string name="home_key_description">讓遙控器的主畫面鍵開啟這個桌面。</string>
+    <string name="card_prompt_title">來自 %1$s 的新卡片</string>
+    <string name="card_prompt_body">%1$s 可以在主畫面顯示一張卡片。選擇隱藏的話，這個 app 原本的圖塊維持不變。</string>
+    <string name="card_prompt_names">卡片名稱是「%1$s」，app 是「%2$s」。</string>
+    <string name="card_prompt_resigned">%1$s 更新後換了簽署金鑰，你先前的選擇不再適用，請重新決定是否顯示它的卡片。</string>
+    <string name="card_prompt_relabelled">%1$s 在你決定之後改了卡片名稱，請重新決定。</string>
+    <string name="card_prompt_hint">之後可以再改：在「設定」上長按確認鍵，再選「模組卡片」。</string>
+    <string name="card_prompt_identity">%1$s，金鑰 %2$s</string>
+    <string name="card_keep_hidden">維持隱藏</string>
+    <string name="card_show">顯示卡片</string>
+    <string name="card_not_saved">無法儲存這個選擇</string>
+    <string name="module_cards">模組卡片</string>
+    <string name="no_module_cards">沒有安裝任何模組卡片</string>
+    <string name="card_app_name">App：%1$s</string>
+    <string name="card_state_shown">顯示</string>
+    <string name="card_state_over_limit">顯示，但超過 8 張的上限</string>
+    <string name="card_state_hidden">隱藏</string>
+    <string name="card_state_new">新的</string>
+    <string name="card_state_new_key">新金鑰</string>
+    <string name="card_state_new_label">新名稱</string>
+    <string name="dock_edit">編輯 Dock</string>
+    <string name="power_menu">重新啟動…</string>
+    <string name="dock_edit_hint">選擇要變更的 Dock 位置，然後按確定。按返回完成。</string>
+    <string name="dock_edit_pick_app">現在選擇要放在那裡的應用程式，然後按確定。按返回重新選擇位置。</string>
+    <string name="tile_add_to_dock">新增至 Dock</string>
+    <string name="tile_replace_in_dock">以其他應用程式取代</string>
+    <string name="dock_edit_pick_place">為此應用程式選擇 Dock 位置，然後按確定。按返回取消。</string>
+    <string name="reorder">調整應用程式順序</string>
+    <string name="tile_move">移動</string>
+    <string name="reorder_hint">按確定選取應用程式，方向鍵移動，按返回放下。再按一次返回完成。</string>
+    <string name="reorder_not_saved">無法儲存新順序</string>
+    <string name="app_library">應用程式庫</string>
+    <string name="last_opened">上次開啟：%1$s</string>
+    <string name="library_empty">找不到可啟動的應用程式</string>
+    <string name="library_on_home">已在主畫面</string>
+    <string name="library_add_home">新增至主畫面</string>
+    <string name="library_remove_shortcut">從主畫面移除</string>
+    <string name="library_open">開啟</string>
+    <string name="library_app_info">應用程式資訊</string>
+    <string name="library_save_failed">無法儲存捷徑</string>
+    <string name="library_recent">新安裝 · 新增至主畫面</string>
+    <string name="library_hint_add">按下以新增至主畫面 · 長按以顯示選項</string>
+    <string name="library_hint_open">按下以開啟 · 長按以顯示選項</string>
+    <plurals name="library_app_count">
+        <item quantity="other">%1$d 個應用程式</item>
+    </plurals>
+    <string name="greeting_with_name">%1$s，%2$s</string>
+    <string name="game_live">直播中</string>
+    <string name="clock_format_system">系統</string>
+    <string name="clock_format_12">12 小時制</string>
+    <string name="clock_format_24">24 小時制</string>
 </resources>

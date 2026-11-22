@@ -1,130 +1,101 @@
-<?xml version="1.0" encoding="utf-8"?><!--
-  ~ Simple TV Launcher
-  ~ Copyright 2017 Alexandre Del Bigio
-  ~
-  ~ Licensed under the Apache License, Version 2.0 (the "License");
-  ~ you may not use this file except in compliance with the License.
-  ~ You may obtain a copy of the License at
-  ~
-  ~     http://www.apache.org/licenses/LICENSE-2.0
-  ~
-  ~ Unless required by applicable law or agreed to in writing, software
-  ~ distributed under the License is distributed on an "AS IS" BASIS,
-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  ~ See the License for the specific language governing permissions and
-  ~ limitations under the License.
-  -->
-
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string name="applications">Applications</string>
-	<string name="preferences">Préférences</string>
-	<string name="title_screensaver">Écran de veille</string>
-	<string name="summary_screensaver">Configurer l’écran de veille</string>
-	<string name="screensaver_unavailable">Les réglages de l’écran de veille sont indisponibles sur cet appareil</string>
-	<string name="settings_unavailable">Les réglages système sont indisponibles sur cet appareil</string>
-	<string name="add_shortcut">Ajouter un raccourci</string>
-	<string name="confirm_shortcut">Ajouter %1$s à la première case vide ?</string>
-	<string name="shortcut_unavailable">Ce raccourci ne peut pas être ajouté ou ouvert</string>
-	<string name="no_empty_tile">Aucune case vide. Supprimez une icône ou agrandissez la grille.</string>
-	<string name="about">A propos</string>
-	<string name="app_grid">Taille de la grille</string>
-	<string name="summary_background">Fond d\'écran</string>
-	<string name="summary_grid_x">Nombre de colonnes : %s</string>
-	<string name="summary_grid_y">Nombre de ligne : %s</string>
-	<string name="summary_margin_x">Largeur d\'espacement entre les icones : %s dp</string>
-	<string name="summary_margin_y">Hauteur d\'espacement entre les icones : %s dp</string>
-	<string name="summary_screen_always_on">Garder l\'écran allumer</string>
-	<string name="summary_show_date">Afficher la date sous l\'heure</string>
-	<string name="summary_show_name">Afficher le nom des applications sur l\'écran principal</string>
-	<string name="summary_system">Ouvrir les paramètres Android</string>
-	<string name="system">Système</string>
-	<string name="title_background">Fond d\'écran</string>
-	<string name="title_grid_x">Colonnes</string>
-	<string name="title_grid_y">Lignes</string>
-	<string name="title_margin_x">Marge X</string>
-	<string name="title_margin_y">Marge Y</string>
-	<string name="title_screen_always_on">Ecran toujours allumé</string>
-	<string name="title_show_date">Afficher la date</string>
-	<string name="title_show_name">Afficher les noms</string>
-	<string name="title_system">Paramètres système</string>
-	<string name="summary_default_transparency">Utiliser la transparence par défaut (en cas de problème)</string>
-	<string name="title_default_transparency">Transparence par défaut</string>
-	<string name="title_transparency">Transparence du fond</string>
-	<string name="error_opening_link">Error (%1$s) : %2$s</string>
-	<string name="home_locked">Icone verrouillée (cf. Préférences)</string>
-	<string name="summary_locked">Empêcher la modification des icônes et de la grille</string>
-	<string name="application_unavailable">Indisponible : %1$s</string>
-	<string name="title_locked">Verrouiller les icones</string>
-	<string name="title_show_battery_information">Afficher les informations sur la batterie</string>
-	<string name="summary_show_battery_information">Afficher le niveau et l\'état de la batterie sur l\'écran d\'accueil</string>
-	<string name="new_folder">Nouveau dossier…</string>
-	<string name="folder_name">Nom du dossier</string>
-	<string name="folder_add">Ajouter</string>
-	<string name="folder_rename">Renommer</string>
-	<string name="folder_delete">Supprimer le dossier</string>
-	<string name="folder_delete_confirm">Supprimer ce dossier et ses cases d’accueil ? Les applications resteront installées.</string>
-	<string name="folder_empty">Ce dossier est vide.</string>
-	<string name="folder_hint">Appuyez longuement sur un élément pour le retirer de ce dossier.</string>
-	<string name="folder_remove">Retirer %1$s de ce dossier ?</string>
-	<string name="folder_error">Impossible de lire ce dossier.</string>
-	<string name="protection">PIN et applications masquées</string>
-	<string name="protection_summary">Protéger les préférences, les applications et les dossiers.</string>
-	<string name="pin">PIN</string>
-	<string name="unlock">Saisissez votre PIN</string>
-	<string name="pin_enable">Définir le PIN</string>
-	<string name="pin_change">Modifier le PIN</string>
-	<string name="pin_confirm">Confirmer le PIN</string>
-	<string name="pin_format">Utilisez 4 à 8 chiffres.</string>
-	<string name="pin_mismatch">Les PIN ne correspondent pas.</string>
-	<string name="pin_invalid">PIN incorrect.</string>
-	<string name="pin_retry">Trop de tentatives. Patientez 30 secondes.</string>
-	<string name="pin_summary">Le PIN protège l’accès aux préférences et la création de raccourcis.</string>
-	<string name="hidden_apps">Applications masquées</string>
-	<string name="hidden_summary">Masquer les applications et leurs raccourcis de l’accueil et des listes. Les affectations sont conservées.</string>
-	<string name="locked_apps">Applications et dossiers protégés</string>
-	<string name="locked_summary">Demander le PIN avant d’ouvrir les éléments sélectionnés.</string>
-	<string name="protection_disable">Désactiver la protection</string>
-	<string name="protection_disable_summary">Réafficher les applications masquées et ne plus demander le PIN. Conserver les sélections pour plus tard.</string>
-	<string name="protection_limits">Protection limitée au launcher</string>
-	<string name="protection_recovery">Cette protection ne verrouille ni Android ni les autres launchers. En cas d’oubli du PIN, effacez les données du launcher dans les réglages Android : la disposition de l’accueil sera également réinitialisée.</string>
-	<string name="protection_error">Impossible d’enregistrer les réglages de protection.</string>
-	<string name="protection_category">Sécurité</string>
-	<string name="title_show_wallpaper">Afficher le fond d’écran sur l’accueil</string>
-	<string name="summary_show_wallpaper">Désactiver pour un accueil noir, sans modifier le fond d’écran Android.</string>
-	<string name="reset_wallpaper">Rétablir le fond d’écran par défaut</string>
-	<string name="summary_reset_wallpaper">Rétablir le fond d’écran d’accueil Android pour tous les launchers.</string>
-	<string name="confirm_reset_wallpaper">Rétablir le fond d’écran d’accueil Android par défaut ? Ce changement concerne tous les launchers.</string>
-	<string name="resetting_wallpaper">Rétablissement du fond d’écran…</string>
-	<string name="wallpaper_restored">Fond d’écran par défaut rétabli.</string>
-	<string name="wallpaper_error">Impossible de rétablir le fond d’écran sur cet appareil.</string>
-	<string name="wallpaper_unavailable">La sélection du fond d’écran est indisponible sur cet appareil.</string>
-	<string name="title_show_ip">Afficher les adresses IP</string>
-	<string name="summary_show_ip">Afficher les adresses locales par interface. Sélectionnez la zone des adresses pour les détails.</string>
-	<string name="ip_addresses">Adresses IP</string>
-	<string name="network_disconnected">Aucune connexion réseau</string>
-	<string name="ip_unavailable">Aucune adresse IP disponible</string>
-	<string name="network_unavailable">Informations réseau indisponibles</string>
-	<string name="choose_home_image">Choisir une image d’accueil</string>
-	<string name="summary_choose_home_image">Choisir une image pour LauncherTV uniquement (32 Mo maximum). Active l’image d’accueil.</string>
-	<string name="use_home_image">Utiliser l’image d’accueil</string>
-	<string name="summary_home_image">Désactiver pour retrouver le fond Android. Le fond Android reste inchangé.</string>
-	<string name="image_scale">Cadrage de l’image d’accueil</string>
-	<string name="image_fit">Image entière (bandes noires si nécessaire)</string>
-	<string name="image_crop">Remplir l’écran (bords coupés si nécessaire)</string>
-	<string name="image_imported">Image d’accueil enregistrée</string>
-	<string name="image_error">Impossible d’enregistrer cette image. Choisissez une image valide de 32 Mo maximum.</string>
-	<string name="image_picker_unavailable">Aucun sélecteur d’image disponible</string>
-	<string-array name="image_scale_labels">
-		<item>@string/image_fit</item>
-		<item>@string/image_crop</item>
-	</string-array>
-	<string name="title_show_network">Afficher l’icône réseau</string>
-	<string name="summary_show_network">Afficher le type de connexion près de l’horloge, sans vérifier l’accès à Internet.</string>
-	<string name="network_wifi">Wi-Fi connecté</string>
-	<string name="network_ethernet">Ethernet connecté</string>
-	<string name="network_other">Autre réseau connecté</string>
-	<string name="title_home">Accueil par défaut</string>
-	<string name="summary_home">Choisir LauncherTV comme accueil par défaut dans les réglages Android.</string>
-	<string name="home_settings_unavailable">Le choix de l’accueil est indisponible. Les réglages Android ont été ouverts.</string>
-	<string name="title_privacy">Politique de confidentialité</string>
+    <string name="app_name">Accueil</string>
+    <string name="inputs">Sources</string>
+    <string name="wifi">Wi-Fi</string>
+    <string name="settings">Paramètres</string>
+    <string name="choose_input">Sources</string>
+    <string name="connected">Connecté</string>
+    <string name="standby">En veille</string>
+    <string name="not_connected">Aucun appareil</string>
+    <string name="live_tv">TV en direct</string>
+    <string name="no_inputs">Aucune source trouvée</string>
+    <string name="more_inputs">Autres sources</string>
+    <string name="good_morning">Bonjour</string>
+    <string name="good_afternoon">Bon après-midi</string>
+    <string name="good_evening">Bonsoir</string>
+    <string name="good_night">Bonne nuit</string>
+    <string name="ethernet">Ethernet</string>
+    <string name="offline">Hors ligne</string>
+    <string name="not_available">Indisponible sur cette TV</string>
+    <string name="cant_open">Impossible d\'ouvrir %1$s</string>
+    <string name="date_format">EEEE d MMMM</string>
+    <string name="stats_cpu">CPU %1$d%%</string>
+    <string name="stats_memory">Mémoire %1$d / %2$d Mo</string>
+    <string name="stats_storage">Stockage %1$s libre</string>
+    <string name="dream_name">Horloge</string>
+    <string name="vpn">VPN</string>
+    <string name="vpn_off">VPN désactivé</string>
+    <string name="home_settings">Accueil par défaut</string>
+    <string name="home_settings_help">Choisissez un écran d\'accueil dans les paramètres système, puis appuyez sur Accueil.</string>
+    <string name="input_key_service_description">Le bouton Source de la télécommande ouvre le choix des sources.</string>
+    <string name="home_key_name">Bouton Accueil</string>
+    <string name="home_key_description">Le bouton Accueil de la télécommande ouvre ce launcher.</string>
+    <string name="card_prompt_title">Nouvelle carte de %1$s</string>
+    <string name="card_prompt_body">%1$s peut afficher une carte sur votre écran d\'accueil. Si vous la masquez, la tuile habituelle de l\'appli reste inchangée.</string>
+    <string name="card_prompt_names">La carte s\'appelle « %1$s ». L\'appli s\'appelle « %2$s ».</string>
+    <string name="card_prompt_resigned">%1$s a été mise à jour avec une autre clé de signature, votre choix précédent ne s\'applique plus. Choisissez à nouveau pour sa carte.</string>
+    <string name="card_prompt_relabelled">%1$s a changé le nom de sa carte depuis votre choix. Choisissez à nouveau.</string>
+    <string name="card_prompt_hint">Vous pourrez changer d\'avis plus tard : maintenez OK sur Paramètres.</string>
+    <string name="card_prompt_identity">%1$s, clé %2$s</string>
+    <string name="card_keep_hidden">Garder masquée</string>
+    <string name="card_show">Afficher la carte</string>
+    <string name="card_not_saved">Impossible d\'enregistrer le choix</string>
+    <string name="module_cards">Cartes des modules</string>
+    <string name="no_module_cards">Aucune carte de module installée</string>
+    <string name="card_app_name">Appli : %1$s</string>
+    <string name="card_state_shown">Affichée</string>
+    <string name="card_state_over_limit">Affichée, au-delà de la limite de 8</string>
+    <string name="card_state_hidden">Masquée</string>
+    <string name="card_state_new">Nouvelle</string>
+    <string name="card_state_new_key">Nouvelle clé</string>
+    <string name="card_state_new_label">Nouveau nom</string>
+    <string name="launcher_settings">Paramètres du lanceur</string>
+    <string name="native_settings">Paramètres du fabricant</string>
+    <string name="columns_label">Applications par ligne</string>
+    <string name="dock_opacity_label">Opacité de la barre du dock</string>
+    <string name="animations_state">Animations : %1$s</string>
+    <string name="advanced_effects">Effets avancés</string>
+    <string name="advanced_effects_state">Effets avancés : %1$s</string>
+    <string name="open_on_start_label">Ouvrir au démarrage</string>
+    <string name="open_on_start_state">Ouvrir au démarrage: %1$s</string>
+    <string name="advanced_effects_warning">Soulève les tuiles, agrandit les icônes et adoucit les transitions de couleur. Peut augmenter la mémoire utilisée selon le téléviseur.</string>
+    <string name="follow_theme">Suivre le thème (réinitialiser les choix)</string>
+    <string name="follow_theme_hint">Utilise la disposition et les animations du thème actuel ou les valeurs intégrées. Appliquer ou réinitialiser un thème efface aussi ces choix.</string>
+    <string name="tv_settings">Paramètres du téléviseur</string>
+    <string name="on">Activé</string>
+    <string name="off">Désactivé</string>
+    <string name="enable">Activer</string>
+    <string name="dock_edit">Modifier le dock</string>
+    <string name="power_menu">Redémarrer…</string>
+    <string name="dock_edit_hint">Choisissez l\'emplacement du dock à changer et appuyez sur OK. Retour pour terminer.</string>
+    <string name="dock_edit_pick_app">Choisissez maintenant l\'appli à y mettre et appuyez sur OK. Retour pour choisir un autre emplacement.</string>
+    <string name="tile_add_to_dock">Ajouter au dock</string>
+    <string name="tile_replace_in_dock">Remplacer par une autre appli</string>
+    <string name="dock_edit_pick_place">Choisissez l\'emplacement du dock pour cette appli et appuyez sur OK. Retour pour annuler.</string>
+    <string name="reorder">Réorganiser les applis</string>
+    <string name="tile_move">Déplacer</string>
+    <string name="reorder_hint">OK prend une appli, les flèches la déplacent, Retour la pose. Retour à nouveau pour terminer.</string>
+    <string name="reorder_not_saved">Impossible d\'enregistrer le nouvel ordre</string>
+    <string name="app_library">Bibliothèque d’applications</string>
+    <string name="library_empty">Aucune application à ouvrir</string>
+    <string name="library_on_home">Sur l’accueil</string>
+    <string name="library_add_home">Ajouter à l’accueil</string>
+    <string name="library_remove_shortcut">Retirer de l’accueil</string>
+    <string name="library_open">Ouvrir</string>
+    <string name="library_app_info">Infos sur l’application</string>
+    <string name="library_save_failed">Impossible d’enregistrer le raccourci</string>
+    <string name="library_recent">Nouvelle · Ajouter à l’accueil</string>
+    <string name="library_hint_add">Appuyer : ajouter à Accueil · Maintenir : options</string>
+    <string name="library_hint_open">Appuyer : ouvrir · Maintenir : options</string>
+    <plurals name="library_app_count">
+        <item quantity="one">%1$d application</item>
+        <item quantity="other">%1$d applications</item>
+    </plurals>
+    <string name="greeting_with_name">%1$s, %2$s</string>
+    <string name="last_opened">Dernière ouverture : %1$s</string>
+    <string name="game_live">En direct</string>
+    <string name="clock_format_system">Système</string>
+    <string name="clock_format_12">12 heures</string>
+    <string name="clock_format_24">24 heures</string>
 </resources>

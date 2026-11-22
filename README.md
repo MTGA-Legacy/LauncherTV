@@ -1,22 +1,27 @@
-[![APK release](https://github.com/alescdb/LauncherTV/actions/workflows/release.yml/badge.svg)](https://github.com/alescdb/LauncherTV/actions/workflows/release.yml)
+# LauncherTV
 
-# Simple TV Launcher
+Apple TV 风格的 Android TV 桌面，当前实现提取自 [CleanYourTV](https://github.com/Gathin23/cleanyourtv) 的 `launcher/app` 模块（来源提交 `f63a1ebcdcd63aae1ec1b6f62aa4d2a6858c116b`）。
 
-A lightweight Android TV launcher designed for remote controls, including older
-TV boxes running Android 4.0 or later.
+## 当前范围
 
-<a href="https://play.google.com/store/apps/details?id=org.cosinus.launchertv">
-  <img src="docs/images/google-play-badge.png" alt="Get it on Google Play" width="200">
-</a>
+- 仅替换桌面实现和对应资源。
+- 默认包名：`com.gathin.tvhome`。
+- 当前上游桌面 `minSdk` 为 26（Android 8.0），本次没有做 Android 4.4/API 19 适配。
 
-![Simple TV Launcher home screen](docs/images/home.png)
+## 构建
 
-## Features
+```sh
+./gradlew :launcher:assembleRelease
+```
 
-- [Customizable home grid](docs/home.md): tile size, labels, transparency and icon locking.
-- [Applications, shortcuts and folders](docs/home.md#applications-shortcuts-and-folders), including a tile for the TV's original launcher.
-- [PIN protection and hidden applications](docs/protection.md).
-- [System wallpaper or a custom home image](docs/wallpaper.md), with fit and crop modes.
-- [Clock with optional date, battery and network information](docs/home.md#status-information).
+也可以通过 Gradle 属性覆盖包名：
 
-[Build from source](docs/building.md)
+```sh
+./gradlew :launcher:assembleRelease -PlauncherApplicationId=com.example.launchertv
+```
+
+## 来源与授权
+
+- CleanYourTV launcher：MIT，见 [launcher/LICENSE-MIT](launcher/LICENSE-MIT)。
+- Outfit 字体：SIL Open Font License 1.1，见 [launcher/FONT-LICENSE-OFL.txt](launcher/FONT-LICENSE-OFL.txt)。
+- Fluent Emoji 图片：MIT，见 [launcher/ICONS-LICENSE-FLUENT-EMOJI.txt](launcher/ICONS-LICENSE-FLUENT-EMOJI.txt)。
