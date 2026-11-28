@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+import android.os.AsyncTask;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -39,12 +40,14 @@ public final class LauncherSettingsActivity extends Activity {
     private TextView advancedChoice;
     private TextView followThemeChoice;
     private TextView openOnStartChoice;
+    private TextView onlineWallpaperChoice, showWallpaperChoice, showDateChoice, showNamesChoice, showNetworkChoice, showBatteryChoice, keepScreenOnChoice;
     private int columns;
     private int rowsBelowDock;
     private int dockOpacity;
     private String clockFormat;
     private boolean animations;
     private boolean advancedEffects;
+    private boolean showWallpaper, showDate, showNames, showNetwork, showBattery, keepScreenOn, onlineWallpaper;
 
     @Override
     protected void onCreate(Bundle state) {
@@ -64,6 +67,13 @@ public final class LauncherSettingsActivity extends Activity {
         clockFormat = config.clockFormat;
         animations = config.animations;
         advancedEffects = config.animations && config.advancedEffects;
+        showDate = config.showDate;
+        showWallpaper = choices.getBoolean(Config.SHOW_WALLPAPER_KEY, true);
+        showNames = config.alwaysShowNames;
+        showNetwork = config.showNetworkPill;
+        showBattery = config.showBattery;
+        keepScreenOn = config.keepScreenOn;
+        onlineWallpaper = choices.getBoolean(Config.ONLINE_WALLPAPER_KEY, false);
 
         int[] ids = {R.id.columns4, R.id.columns5, R.id.columns6, R.id.columns7};
         for (int i = 0; i < ids.length; i++) {
@@ -125,6 +135,26 @@ public final class LauncherSettingsActivity extends Activity {
         }
         wallpaperChoice = findViewById(R.id.wallpaperChoice);
         wallpaperChoice.setOnClickListener(v -> showWallpaperPicker());
+        showWallpaperChoice = findViewById(R.id.showWallpaperChoice);
+        showWallpaperChoice.setOnClickListener(v -> { showWallpaper = !showWallpaper; choices.edit().putBoolean(Config.SHOW_WALLPAPER_KEY, showWallpaper).apply(); changed(); refresh(); });
+        onlineWallpaperChoice = findViewById(R.id.onlineWallpaperChoice);
+        onlineWallpaperChoice.setOnClickListener(v -> showOnlineWallpapers());
+        onlineWallpaperChoice.setOnLongClickListener(v -> {
+            String url = choices.getString("online_wallpaper_url", "");
+            if (url.isEmpty()) return false;
+            open(new Intent(Intent.ACTION_VIEW, android.net.Uri.parse(url)));
+            return true;
+        });
+        showDateChoice = findViewById(R.id.showDateChoice);
+        showDateChoice.setOnClickListener(v -> { showDate = !showDate; choices.edit().putBoolean(Config.SHOW_DATE_KEY, showDate).apply(); changed(); refresh(); });
+        showNamesChoice = findViewById(R.id.showNamesChoice);
+        showNamesChoice.setOnClickListener(v -> { showNames = !showNames; choices.edit().putBoolean(Config.SHOW_NAMES_KEY, showNames).apply(); changed(); refresh(); });
+        showNetworkChoice = findViewById(R.id.showNetworkChoice);
+        showNetworkChoice.setOnClickListener(v -> { showNetwork = !showNetwork; choices.edit().putBoolean("show_network", showNetwork).apply(); changed(); refresh(); });
+        showBatteryChoice = findViewById(R.id.showBatteryChoice);
+        showBatteryChoice.setOnClickListener(v -> { showBattery = !showBattery; choices.edit().putBoolean(Config.SHOW_BATTERY_KEY, showBattery).apply(); changed(); refresh(); });
+        keepScreenOnChoice = findViewById(R.id.keepScreenOnChoice);
+        keepScreenOnChoice.setOnClickListener(v -> { keepScreenOn = !keepScreenOn; choices.edit().putBoolean(Config.KEEP_SCREEN_ON_KEY, keepScreenOn).apply(); changed(); refresh(); });
         animationsChoice = findViewById(R.id.animationsChoice);
         animationsChoice.setOnClickListener(v -> {
             animations = !animations;
@@ -157,7 +187,11 @@ public final class LauncherSettingsActivity extends Activity {
             if (!hasOnTvChoices()) return;
             choices.edit().remove("columns").remove(Config.ROWS_BELOW_DOCK_KEY).remove("animations")
                     .remove("advanced_effects").remove(Config.WALLPAPER_CHOICE_KEY)
-                    .remove(Config.DOCK_OPACITY_KEY).remove(Config.CLOCK_FORMAT_KEY).remove(OpenOnStart.KEY).commit();
+                    .remove(Config.DOCK_OPACITY_KEY).remove(Config.CLOCK_FORMAT_KEY).remove(OpenOnStart.KEY)
+                    .remove(Config.SHOW_DATE_KEY).remove(Config.SHOW_NAMES_KEY).remove("show_network")
+                    .remove(Config.SHOW_BATTERY_KEY)
+                    .remove(Config.KEEP_SCREEN_ON_KEY).remove(Config.SHOW_WALLPAPER_KEY)
+                    .remove(Config.ONLINE_WALLPAPER_KEY).commit();
             Config current = Config.load(this);
             columns = current.columns;
             rowsBelowDock = current.rowsBelowDock;
@@ -165,6 +199,13 @@ public final class LauncherSettingsActivity extends Activity {
             clockFormat = current.clockFormat;
             animations = current.animations;
             advancedEffects = current.animations && current.advancedEffects;
+            showDate = current.showDate;
+            showWallpaper = true;
+            showNames = current.alwaysShowNames;
+            showNetwork = current.showNetworkPill;
+            showBattery = current.showBattery;
+            keepScreenOn = current.keepScreenOn;
+            onlineWallpaper = false;
             changed();
             refresh();
         });
@@ -217,6 +258,44 @@ public final class LauncherSettingsActivity extends Activity {
                 })
                 .setNegativeButton(android.R.string.cancel, null)
                 .show();
+    }
+
+    private void showOnlineWallpapers() {
+        onlineWallpaperChoice.setText(R.string.wallpaper_online_loading);
+        AsyncTask.THREAD_POOL_EXECUTOR.execute(() -> {
+            try {
+                List<OnlineWallpaperSource.Item> items = OnlineWallpaperSource.fetch();
+                runOnUiThread(() -> {
+                    if (items.isEmpty()) { Toast.makeText(this, R.string.wallpaper_online_empty, Toast.LENGTH_LONG).show(); refresh(); return; }
+                    String[] labels = new String[items.size()];
+                    for (int i = 0; i < items.size(); i++) {
+                        OnlineWallpaperSource.Item item = items.get(i);
+                        labels[i] = item.credit().isEmpty() ? item.title : item.title + " · " + item.credit();
+                    }
+                    new AlertDialog.Builder(this).setTitle(R.string.wallpaper_online)
+                            .setItems(labels, (dialog, which) -> applyOnlineWallpaper(items.get(which)))
+                            .setNegativeButton(android.R.string.cancel, null).show();
+                });
+            } catch (Exception error) {
+                runOnUiThread(() -> { Toast.makeText(this, R.string.wallpaper_online_failed, Toast.LENGTH_LONG).show(); refresh(); });
+            }
+        });
+    }
+
+    private void applyOnlineWallpaper(OnlineWallpaperSource.Item item) {
+        Toast.makeText(this, R.string.wallpaper_online_loading, Toast.LENGTH_SHORT).show();
+        AsyncTask.THREAD_POOL_EXECUTOR.execute(() -> {
+            try {
+                OnlineWallpaperSource.download(this, item);
+                choices.edit().remove(Config.WALLPAPER_CHOICE_KEY).putBoolean(Config.ONLINE_WALLPAPER_KEY, true)
+                        .putString("online_wallpaper_title", item.title)
+                        .putString("online_wallpaper_credit", item.credit())
+                        .putString("online_wallpaper_url", item.pageUrl).apply();
+                runOnUiThread(() -> { onlineWallpaper = true; changed(); refresh(); Toast.makeText(this, R.string.wallpaper_online_applied, Toast.LENGTH_SHORT).show(); });
+            } catch (Exception error) {
+                runOnUiThread(() -> Toast.makeText(this, R.string.wallpaper_online_failed, Toast.LENGTH_LONG).show());
+            }
+        });
     }
 
     /** Off, then every app with a TV entry point by name. Saved at once; it is read on the next boot. */
@@ -316,6 +395,14 @@ public final class LauncherSettingsActivity extends Activity {
                 "none".equals(wallpaperCurrent) ? getString(R.string.wallpaper_none)
                         : wallpaperCurrent != null ? wallpaperCurrent
                         : getString(R.string.wallpaper_theme_default)));
+        onlineWallpaperChoice.setText(getString(R.string.wallpaper_online_state,
+                onlineWallpaper ? choices.getString("online_wallpaper_title", getString(R.string.on)) : getString(R.string.off)));
+        showWallpaperChoice.setText(getString(R.string.show_wallpaper_setting) + ": " + getString(showWallpaper ? R.string.on : R.string.off));
+        showDateChoice.setText(getString(R.string.show_date_setting) + ": " + getString(showDate ? R.string.on : R.string.off));
+        showNamesChoice.setText(getString(R.string.show_names_setting) + ": " + getString(showNames ? R.string.on : R.string.off));
+        showNetworkChoice.setText(getString(R.string.show_network_setting) + ": " + getString(showNetwork ? R.string.on : R.string.off));
+        showBatteryChoice.setText(getString(R.string.show_battery_setting) + ": " + getString(showBattery ? R.string.on : R.string.off));
+        keepScreenOnChoice.setText(getString(R.string.keep_screen_on_setting) + ": " + getString(keepScreenOn ? R.string.on : R.string.off));
         openOnStartChoice.setText(getString(R.string.open_on_start_state, openOnStartLabel()));
         followThemeChoice.setSelected(!hasOnTvChoices());
     }
@@ -324,7 +411,10 @@ public final class LauncherSettingsActivity extends Activity {
         return choices.contains("columns") || choices.contains(Config.ROWS_BELOW_DOCK_KEY)
                 || choices.contains("animations") || choices.contains("advanced_effects")
                 || choices.contains(Config.WALLPAPER_CHOICE_KEY) || choices.contains(Config.DOCK_OPACITY_KEY)
-                || choices.contains(Config.CLOCK_FORMAT_KEY) || choices.contains(OpenOnStart.KEY);
+                || choices.contains(Config.CLOCK_FORMAT_KEY) || choices.contains(OpenOnStart.KEY)
+                || choices.contains(Config.SHOW_DATE_KEY) || choices.contains(Config.SHOW_NAMES_KEY)
+                || choices.contains("show_network") || choices.contains(Config.SHOW_BATTERY_KEY) || choices.contains(Config.KEEP_SCREEN_ON_KEY)
+                || choices.contains(Config.SHOW_WALLPAPER_KEY) || choices.contains(Config.ONLINE_WALLPAPER_KEY);
     }
 
     private void open(Intent intent) {

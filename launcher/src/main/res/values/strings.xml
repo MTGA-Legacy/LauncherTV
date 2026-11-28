@@ -41,6 +41,7 @@
     <string name="stats_cpu">CPU %1$d%%</string>
     <string name="stats_memory">Memory %1$d / %2$d MB</string>
     <string name="stats_storage">Storage %1$s free</string>
+    <string name="stats_battery">Battery %1$d%%</string>
     <string name="storage_gb_whole">%1$.0f GB</string>
     <string name="storage_gb_decimal">%1$.1f GB</string>
     <string name="dream_name">Clock</string>
@@ -58,6 +59,18 @@
     <string name="wallpaper_none">None</string>
     <string name="wallpaper_applied">Wallpaper changed</string>
     <string name="wallpaper_theme_default">Theme default</string>
+    <string name="wallpaper_online">Online wallpapers</string>
+    <string name="wallpaper_online_state">Online wallpaper: %1$s</string>
+    <string name="wallpaper_online_loading">Loading featured wallpapers…</string>
+    <string name="wallpaper_online_empty">No online wallpapers available</string>
+    <string name="wallpaper_online_failed">Could not load online wallpapers</string>
+    <string name="wallpaper_online_applied">Online wallpaper applied</string>
+    <string name="show_wallpaper_setting">Show wallpaper</string>
+    <string name="show_date_setting">Show date</string>
+    <string name="show_names_setting">Show app names</string>
+    <string name="show_network_setting">Show network button</string>
+    <string name="show_battery_setting">Show battery</string>
+    <string name="keep_screen_on_setting">Keep screen on</string>
     <string name="animations_state">Animations: %1$s</string>
     <string name="advanced_effects">Advanced effects</string>
     <string name="advanced_effects_state">Advanced effects: %1$s</string>
