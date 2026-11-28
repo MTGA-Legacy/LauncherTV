@@ -60,6 +60,17 @@
     <string name="wallpaper_applied">Wallpaper changed</string>
     <string name="wallpaper_theme_default">Theme default</string>
     <string name="wallpaper_online">Online wallpapers</string>
+    <string name="wallpaper_online_choose_preset">Choose a collection</string>
+    <string name="wallpaper_preset_daily">Daily recommendation</string>
+    <string name="wallpaper_preset_landscapes">Landscapes</string>
+    <string name="wallpaper_preset_people">People</string>
+    <string name="wallpaper_preset_animals">Animals</string>
+    <string name="wallpaper_preset_architecture">Architecture and cities</string>
+    <string name="wallpaper_preset_astronomy">Space and astronomy</string>
+    <string name="wallpaper_online_details">Wallpaper details</string>
+    <string name="wallpaper_open_source">Open source page</string>
+    <string name="wallpaper_source_bing">Source: Bing China</string>
+    <string name="wallpaper_source_commons">Source: Wikimedia Commons</string>
     <string name="wallpaper_online_state">Online wallpaper: %1$s</string>
     <string name="wallpaper_online_loading">Loading featured wallpapers…</string>
     <string name="wallpaper_online_empty">No online wallpapers available</string>

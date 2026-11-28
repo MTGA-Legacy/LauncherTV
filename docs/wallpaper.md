@@ -4,11 +4,14 @@
 default. Disable it for a black background without changing the system image.
 The Android wallpaper picker remains available in preferences.
 
-**Online wallpapers** loads the featured widescreen desktop background
-collection from Wikimedia Commons. The launcher downloads only the selected
-thumbnail, keeps it in private app storage, and continues showing it when the
-TV is offline. Long press the online wallpaper row to open the Commons file
-page and review the photographer and license information.
+**Online wallpapers** first offers presets for daily recommendations,
+landscapes, people, animals, architecture and cities, and space and astronomy.
+Daily recommendations use the Bing China homepage feed first, which is more
+likely to work on a mainland network; Wikimedia Commons is used as the
+fallback and provides the themed collections. The launcher downloads only the
+selected image, keeps it in private app storage, and continues showing it when
+the TV is offline. Long press the row to review the title, source and credit;
+the source page is a secondary action in that details dialog.
 
 **Restore default wallpaper** changes the Android home wallpaper for all
 launchers and asks for confirmation. A separate lock screen wallpaper is

@@ -140,10 +140,7 @@ public final class LauncherSettingsActivity extends Activity {
         onlineWallpaperChoice = findViewById(R.id.onlineWallpaperChoice);
         onlineWallpaperChoice.setOnClickListener(v -> showOnlineWallpapers());
         onlineWallpaperChoice.setOnLongClickListener(v -> {
-            String url = choices.getString("online_wallpaper_url", "");
-            if (url.isEmpty()) return false;
-            open(new Intent(Intent.ACTION_VIEW, android.net.Uri.parse(url)));
-            return true;
+            return showOnlineWallpaperDetails();
         });
         showDateChoice = findViewById(R.id.showDateChoice);
         showDateChoice.setOnClickListener(v -> { showDate = !showDate; choices.edit().putBoolean(Config.SHOW_DATE_KEY, showDate).apply(); changed(); refresh(); });
@@ -191,7 +188,9 @@ public final class LauncherSettingsActivity extends Activity {
                     .remove(Config.SHOW_DATE_KEY).remove(Config.SHOW_NAMES_KEY).remove("show_network")
                     .remove(Config.SHOW_BATTERY_KEY)
                     .remove(Config.KEEP_SCREEN_ON_KEY).remove(Config.SHOW_WALLPAPER_KEY)
-                    .remove(Config.ONLINE_WALLPAPER_KEY).commit();
+                    .remove(Config.ONLINE_WALLPAPER_KEY).remove("online_wallpaper_title")
+                    .remove("online_wallpaper_credit").remove("online_wallpaper_url")
+                    .remove("online_wallpaper_provider").remove("online_wallpaper_preset").commit();
             Config current = Config.load(this);
             columns = current.columns;
             rowsBelowDock = current.rowsBelowDock;
@@ -261,18 +260,35 @@ public final class LauncherSettingsActivity extends Activity {
     }
 
     private void showOnlineWallpapers() {
+        String[] labels = {
+                getString(R.string.wallpaper_preset_daily),
+                getString(R.string.wallpaper_preset_landscapes),
+                getString(R.string.wallpaper_preset_people),
+                getString(R.string.wallpaper_preset_animals),
+                getString(R.string.wallpaper_preset_architecture),
+                getString(R.string.wallpaper_preset_astronomy)
+        };
+        new AlertDialog.Builder(this).setTitle(R.string.wallpaper_online_choose_preset)
+                .setItems(labels, (dialog, which) -> fetchOnlineWallpapers(which))
+                .setNegativeButton(android.R.string.cancel, null).show();
+    }
+
+    private void fetchOnlineWallpapers(int preset) {
         onlineWallpaperChoice.setText(R.string.wallpaper_online_loading);
         AsyncTask.THREAD_POOL_EXECUTOR.execute(() -> {
             try {
-                List<OnlineWallpaperSource.Item> items = OnlineWallpaperSource.fetch();
+                List<OnlineWallpaperSource.Item> items = OnlineWallpaperSource.fetch(preset);
                 runOnUiThread(() -> {
                     if (items.isEmpty()) { Toast.makeText(this, R.string.wallpaper_online_empty, Toast.LENGTH_LONG).show(); refresh(); return; }
                     String[] labels = new String[items.size()];
                     for (int i = 0; i < items.size(); i++) {
                         OnlineWallpaperSource.Item item = items.get(i);
-                        labels[i] = item.credit().isEmpty() ? item.title : item.title + " · " + item.credit();
+                        StringBuilder label = new StringBuilder(item.title);
+                        if (!item.sourceLabel().isEmpty()) label.append(" · ").append(item.sourceLabel());
+                        if (!item.credit().isEmpty()) label.append(" · ").append(item.credit());
+                        labels[i] = label.toString();
                     }
-                    new AlertDialog.Builder(this).setTitle(R.string.wallpaper_online)
+                    new AlertDialog.Builder(this).setTitle(presetTitle(preset))
                             .setItems(labels, (dialog, which) -> applyOnlineWallpaper(items.get(which)))
                             .setNegativeButton(android.R.string.cancel, null).show();
                 });
@@ -290,12 +306,43 @@ public final class LauncherSettingsActivity extends Activity {
                 choices.edit().remove(Config.WALLPAPER_CHOICE_KEY).putBoolean(Config.ONLINE_WALLPAPER_KEY, true)
                         .putString("online_wallpaper_title", item.title)
                         .putString("online_wallpaper_credit", item.credit())
-                        .putString("online_wallpaper_url", item.pageUrl).apply();
+                        .putString("online_wallpaper_url", item.pageUrl)
+                        .putString("online_wallpaper_provider", item.provider)
+                        .putString("online_wallpaper_preset", item.preset).apply();
                 runOnUiThread(() -> { onlineWallpaper = true; changed(); refresh(); Toast.makeText(this, R.string.wallpaper_online_applied, Toast.LENGTH_SHORT).show(); });
             } catch (Exception error) {
                 runOnUiThread(() -> Toast.makeText(this, R.string.wallpaper_online_failed, Toast.LENGTH_LONG).show());
             }
         });
+    }
+
+    private int presetTitle(int preset) {
+        switch (preset) {
+            case OnlineWallpaperSource.LANDSCAPES: return R.string.wallpaper_preset_landscapes;
+            case OnlineWallpaperSource.PEOPLE: return R.string.wallpaper_preset_people;
+            case OnlineWallpaperSource.ANIMALS: return R.string.wallpaper_preset_animals;
+            case OnlineWallpaperSource.ARCHITECTURE: return R.string.wallpaper_preset_architecture;
+            case OnlineWallpaperSource.ASTRONOMY: return R.string.wallpaper_preset_astronomy;
+            default: return R.string.wallpaper_preset_daily;
+        }
+    }
+
+    private boolean showOnlineWallpaperDetails() {
+        String url = choices.getString("online_wallpaper_url", "");
+        if (!onlineWallpaper || url.isEmpty()) return false;
+        String title = choices.getString("online_wallpaper_title", getString(R.string.wallpaper_online));
+        String credit = choices.getString("online_wallpaper_credit", "");
+        String provider = choices.getString("online_wallpaper_provider", "");
+        String details = title;
+        if (!credit.isEmpty()) details += "\n" + credit;
+        if (!provider.isEmpty()) details += "\n" + ("bing".equals(provider)
+                ? getString(R.string.wallpaper_source_bing) : getString(R.string.wallpaper_source_commons));
+        new AlertDialog.Builder(this).setTitle(R.string.wallpaper_online_details)
+                .setMessage(details)
+                .setPositiveButton(R.string.wallpaper_open_source,
+                        (dialog, which) -> open(new Intent(Intent.ACTION_VIEW, android.net.Uri.parse(url))))
+                .setNegativeButton(android.R.string.cancel, null).show();
+        return true;
     }
 
     /** Off, then every app with a TV entry point by name. Saved at once; it is read on the next boot. */
@@ -396,7 +443,9 @@ public final class LauncherSettingsActivity extends Activity {
                         : wallpaperCurrent != null ? wallpaperCurrent
                         : getString(R.string.wallpaper_theme_default)));
         onlineWallpaperChoice.setText(getString(R.string.wallpaper_online_state,
-                onlineWallpaper ? choices.getString("online_wallpaper_title", getString(R.string.on)) : getString(R.string.off)));
+                onlineWallpaper ? choices.getString("online_wallpaper_title", getString(R.string.on))
+                        + " · " + onlineSourceLabel()
+                        : getString(R.string.off)));
         showWallpaperChoice.setText(getString(R.string.show_wallpaper_setting) + ": " + getString(showWallpaper ? R.string.on : R.string.off));
         showDateChoice.setText(getString(R.string.show_date_setting) + ": " + getString(showDate ? R.string.on : R.string.off));
         showNamesChoice.setText(getString(R.string.show_names_setting) + ": " + getString(showNames ? R.string.on : R.string.off));
@@ -415,6 +464,12 @@ public final class LauncherSettingsActivity extends Activity {
                 || choices.contains(Config.SHOW_DATE_KEY) || choices.contains(Config.SHOW_NAMES_KEY)
                 || choices.contains("show_network") || choices.contains(Config.SHOW_BATTERY_KEY) || choices.contains(Config.KEEP_SCREEN_ON_KEY)
                 || choices.contains(Config.SHOW_WALLPAPER_KEY) || choices.contains(Config.ONLINE_WALLPAPER_KEY);
+    }
+
+    private String onlineSourceLabel() {
+        return "bing".equals(choices.getString("online_wallpaper_provider", ""))
+                ? getString(R.string.wallpaper_source_bing)
+                : getString(R.string.wallpaper_source_commons);
     }
 
     private void open(Intent intent) {
