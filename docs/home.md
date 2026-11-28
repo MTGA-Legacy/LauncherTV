@@ -1,11 +1,12 @@
 # Home screen
 
-Open **Preferences** to change the grid, margins, labels and transparency.
+Open **Launcher settings** to change the grid, dock opacity, clock, wallpaper,
+date, app names, network button, battery display and screen behavior.
 Changes apply when returning home. Tiles outside a smaller grid remain saved
 and reappear when you enlarge it.
 
-**Lock icons** prevents tile and folder edits and grid changes. Preferences
-remain accessible so you can unlock them. This setting does not require a PIN.
+The top bar exposes **App library**, **Reorder**, and **Launcher settings**.
+Hold OK on a tile for move, remove from Home and App info actions.
 
 ## Default launcher
 
